@@ -65,7 +65,7 @@ cc_library(
         'include/odbc++/resultset.h',
     ],
     deps = [
-        '@github_unixodbc//DriverManager:libodbc',
+        '@github_unixodbc//:libodbc',
     ],
     strip_include_prefix = 'include',
 )

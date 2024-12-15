@@ -16,16 +16,20 @@ bazel_dep(
     version = '2.3.12',
 )
 
-git_override(
-    module_name = 'unixodbc',
-    remote = 'https://github.com/coding-heresy/unixODBC.git',
-    #branch = 'bazel-support',
-    commit = 'f5d30ba2a4a6d12a15b66596037f12e42ccb105c',
-)
-
 bazel_dep(
     name = 'bazel_module_versions',
     version = '0.0.0',
+)
+
+################################################################################
+# dependency overrides
+################################################################################
+
+archive_override(
+    module_name = 'unixodbc',
+    integrity = "sha256-rz1L9G8/voiPUU9wJDhg9nQ1g0ynFQaUMGCqshl/PiE=",
+    urls = ['https://github.com/coding-heresy/unixODBC/archive/refs/tags/2.3.12.tar.gz'],
+    strip_prefix = 'unixODBC-2.3.12',
 )
 
 archive_override(
@@ -34,6 +38,10 @@ archive_override(
     urls = ['https://github.com/coding-heresy/bazel_module_versions/archive/refs/tags/0.0.0.tar.gz'],
     strip_prefix = 'bazel_module_versions-0.0.0',
 )
+
+################################################################################
+# support for accessing dependent module versions
+################################################################################
 
 module_versions = use_extension('@bazel_module_versions//:extensions.bzl', 'dependent_module_versions')
 use_repo(module_versions, 'module_versions')
