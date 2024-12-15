@@ -1,0 +1,39 @@
+
+module(
+    name = 'libodbcxx',
+    repo_name = 'github_libodbcxx',
+    version = '0.2.5',
+)
+
+bazel_dep(
+    name = 'bazel_skylib',
+    version = '1.7.1',
+)
+
+bazel_dep(
+    name = 'unixodbc',
+    repo_name = 'github_unixodbc',
+    version = '2.3.12',
+)
+
+git_override(
+    module_name = 'unixodbc',
+    remote = 'https://github.com/coding-heresy/unixODBC.git',
+    #branch = 'bazel-support',
+    commit = 'f5d30ba2a4a6d12a15b66596037f12e42ccb105c',
+)
+
+bazel_dep(
+    name = 'bazel_module_versions',
+    version = '0.0.0',
+)
+
+archive_override(
+    module_name = 'bazel_module_versions',
+    integrity = "sha256-t0dFYSC417MvkHbDdhk8GePkp9r4nnVP0VnqGXSsHf8=",
+    urls = ['https://github.com/coding-heresy/bazel_module_versions/archive/refs/tags/0.0.0.tar.gz'],
+    strip_prefix = 'bazel_module_versions-0.0.0',
+)
+
+module_versions = use_extension('@bazel_module_versions//:extensions.bzl', 'dependent_module_versions')
+use_repo(module_versions, 'module_versions')
